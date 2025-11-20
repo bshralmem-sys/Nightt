@@ -1,803 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta http-equiv="refresh" content="200">
-  <link rel="icon" href="لوغو.jpg" type="image/png">
-  <title>مملكة نايت - نظام عرض المحتويات</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <!-- AOS Animation CSS -->
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-  <style>
-    /* =================== */
-    /* == ألوان التصميم الموحدة == */
-    /* =================== */
-
-    :root {
-      --main-purple: #8A2BE2;
-      --hover-purple: #7B1FA2;
-      --dark-bg: #0d0d0d;
-      --card-bg: #121212;
-      --card-hover-bg: #1c1c1c;
-      --card-border: #8A2BE2;
-      --card-hover-border: #8A2BE2cc;
-      --text-muted: #bbb;
-      --footer-text: #aaa;
-      --footer-border: #444;
-      --light-bg: #f9f9f9;
-      --light-text: #333;
-      --light-muted: #666;
-      --light-border: #ddd;
-    }
-
-    /* الخط العام */
-    body {
-      margin: 0;
-      font-family: 'Tajawal', sans-serif;
-      transition: all 0.4s ease;
-    }
-
-    /* الوضع المظلم */
-    .dark-mode {
-      background-color: var(--dark-bg);
-      color: var(--main-purple);
-    }
-    .dark-mode header {
-      background: linear-gradient(to bottom, #111 60%, #1a1a1a);
-      border-bottom: 3px solid var(--main-purple);
-      box-shadow: 0 4px 10px rgba(138, 43, 226, 0.1);
-    }
-    .dark-mode header h1 {
-      text-shadow: 0 0 10px var(--main-purple);
-    }
-    .dark-mode header p, .dark-mode .intro-text {
-      color: #ccc;
-    }
-    .dark-mode .rank-card, .dark-mode .achievement-card, .dark-mode .rule-item, .dark-mode .level-item {
-      background-color: var(--card-bg);
-      border: 2px solid var(--card-border);
-      box-shadow: 0 6px 16px rgba(138, 43, 226, 0.08);
-    }
-    .dark-mode .rank-card:hover, .dark-mode .achievement-card:hover, .dark-mode .rule-item:hover, .dark-mode .level-item:hover {
-      background-color: var(--card-hover-bg);
-      border-color: var(--card-hover-border);
-      box-shadow: 0 8px 20px rgba(138, 43, 226, 0.2);
-    }
-    .dark-mode .rank-title, .dark-mode .achievement-title, .dark-mode .rule-number, .dark-mode .level-title, .dark-mode .intro-section h2, .dark-mode .rank-category h2, .dark-mode .achievement-icon {
-      color: var(--main-purple);
-    }
-    .dark-mode .rank-desc, .dark-mode .achievement-desc, .dark-mode .rule-desc, .dark-mode .level-desc {
-      color: var(--text-muted);
-    }
-    .dark-mode footer {
-      color: var(--footer-text);
-      border-top: 1px solid var(--footer-border);
-    }
-    .dark-mode hr {
-      border: 1px dashed var(--main-purple);
-    }
-
-    /* الوضع النهاري */
-    .light-mode {
-      background-color: var(--light-bg);
-      color: var(--light-text);
-    }
-    .light-mode header {
-      background: #fff;
-      border-bottom: 3px solid var(--hover-purple);
-      box-shadow: 0 4px 10px rgba(123, 31, 162, 0.1);
-    }
-    .light-mode header h1 {
-      color: var(--hover-purple);
-      text-shadow: none;
-    }
-    .light-mode header p, .light-mode .intro-text {
-      color: var(--light-muted);
-    }
-    .light-mode .rank-card, .light-mode .achievement-card, .light-mode .rule-item, .light-mode .level-item {
-      background-color: #fff;
-      border: 2px solid var(--hover-purple);
-      box-shadow: 0 6px 16px rgba(123, 31, 162, 0.1);
-    }
-    .light-mode .rank-card:hover, .light-mode .achievement-card:hover, .light-mode .rule-item:hover, .light-mode .level-item:hover {
-      background-color: #f5f5f5;
-      border-color: var(--hover-purple);
-      box-shadow: 0 8px 20px rgba(123, 31, 162, 0.15);
-    }
-    .light-mode .rank-title, .light-mode .achievement-title, .light-mode .rule-number, .light-mode .level-title, .light-mode .intro-section h2, .light-mode .rank-category h2, .light-mode .achievement-icon {
-      color: var(--hover-purple);
-    }
-    .light-mode .rank-desc, .light-mode .achievement-desc, .light-mode .rule-desc, .light-mode .level-desc {
-      color: var(--light-muted);
-    }
-    .light-mode footer {
-      color: var(--light-muted);
-      border-top-color: var(--light-border);
-    }
-    .light-mode hr {
-      border-color: var(--hover-purple);
-    }
-
-    /* التنسيقات المشتركة */
-    header {
-      text-align: center;
-      padding: 60px 20px 40px;
-      position: relative;
-    }
-    header h1 {
-      font-size: 2.8em;
-      margin: 0;
-      letter-spacing: 2px;
-    }
-    header p {
-      margin-top: 15px;
-      font-size: 1.2em;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* زر تبديل الوضع - ثابت */
-    .toggle-mode {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1001;
-      padding: 10px 18px;
-      background-color: var(--main-purple);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(138, 43, 226, 0.3);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .toggle-mode:hover {
-      background-color: var(--hover-purple);
-      transform: scale(1.05);
-    }
-    .light-mode .toggle-mode {
-      color: #000;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 40px 20px;
-    }
-
-    .intro-section {
-      text-align: center;
-      margin-bottom: 60px;
-      padding: 0 20px;
-    }
-    .intro-section h2 {
-      font-size: 2.2em;
-      margin-bottom: 20px;
-    }
-
-    .intro-text {
-      font-size: 1.1em;
-      max-width: 800px;
-      margin: auto;
-      line-height: 1.7;
-    }
-
-    .rank-category, .achievement-category, .rules-section, .levels-section {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-    .rank-category h2, .achievement-category h2, .rules-section h2, .levels-section h2 {
-      font-size: 2em;
-      margin-bottom: 20px;
-    }
-
-    .ranks-grid, .achievements-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-    }
-
-    .rank-card, .achievement-card {
-      padding: 20px;
-      border-radius: 12px;
-      transition: all 0.3s ease;
-      text-align: center;
-      position: relative;
-    }
-
-    .rank-image {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      border: 2px solid var(--main-purple);
-    }
-    .light-mode .rank-image {
-      border-color: var(--hover-purple);
-    }
-
-    .rank-title, .achievement-title {
-      font-size: 1.4em;
-      margin: 0;
-    }
-
-    .rank-desc, .achievement-desc {
-      margin-top: 10px;
-      font-size: 0.95em;
-    }
-
-    .rank-more {
-      display: none;
-      margin-top: 10px;
-      font-size: 0.9em;
-    }
-
-    .show-more-btn {
-      margin-top: 10px;
-      display: inline-block;
-      background-color: transparent;
-      border: 1px solid var(--main-purple);
-      color: var(--main-purple);
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: 0.3s ease;
-    }
-    .show-more-btn:hover {
-      background-color: var(--main-purple);
-      color: #fff;
-    }
-    .light-mode .show-more-btn {
-      border-color: var(--hover-purple);
-      color: var(--hover-purple);
-    }
-    .light-mode .show-more-btn:hover {
-      background-color: var(--hover-purple);
-      color: #fff;
-    }
-
-    .achievement-icon {
-      font-size: 2.5em;
-      margin-bottom: 15px;
-    }
-
-    .rules-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .rule-item, .level-item {
-      border-radius: 12px;
-      padding: 18px 24px;
-      margin-bottom: 18px;
-      transition: all 0.3s ease;
-      text-align: right; /* تعديل ليتناسب مع المحتوى العربي */
-    }
-    .rules-section h2, .levels-section h2 {
-        text-align: center;
-    }
-
-    .rule-number, .level-title {
-      font-weight: bold;
-      font-size: 1.1em;
-    }
-
-    .rule-desc, .level-desc {
-      margin-top: 8px;
-      font-size: 0.95em;
-    }
-    .rule-desc ol, .rule-desc ul, .level-desc ul {
-        padding-right: 20px;
-        text-align: right;
-    }
-    .rule-desc li, .level-desc li {
-        margin-bottom: 5px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      margin-top: 40px;
-    }
-
-    /* أزرار التنقل */
-    .main-button, .home-button {
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: var(--main-purple);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(138, 43, 226, 0.2), 0 0 10px rgba(138, 43, 226, 0.5);
-      transition: all 0.3s ease;
-      margin: 0 10px;
-      font-size: 1.1em;
-      border: 2px solid var(--main-purple);
-    }
-    .main-button:hover, .home-button:hover {
-      background-color: var(--hover-purple);
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(138, 43, 226, 0.4), 0 0 20px rgba(138, 43, 226, 0.8);
-    }
-    .light-mode .main-button, .light-mode .home-button {
-        color: #fff;
-    }
-    .light-mode .main-button:hover, .light-mode .home-button:hover {
-        background-color: var(--hover-purple);
-    }
-
-    /* زر أسود (تم توحيده مع main-button) */
-    .dark-button {
-      display: none; /* تم إخفاؤه وتوحيد التصميم */
-    }
-
-    hr {
-      border: 1px dashed var(--main-purple);
-      margin: 50px 0;
-    }
-  </style>
-</head>
-<body class="dark-mode" data-aos-easing="ease" data-aos-duration="600" data-aos-delay="0">
-
-<!-- زر تبديل الوضع - ثابت -->
-<button class="toggle-mode" onclick="toggleMode()" id="mode-toggle">
-  <i class="fas fa-moon"></i> وضع مظلم
-</button>
-
-<header>
-  <h1>مملكة نايت</h1>
-  <p>مملكة داخلة تنضم مجموعة من النقابات (جروبات انمي)</p>
-
-  <!-- أزرار التنقل بين الأقسام -->
-  <div style="margin-top: 20px;">
-    <a href="#guilds" class="main-button">
-      <i class="fas fa-users-cog"></i> صفحة النقابات
-    </a>
-    <a href="#achievements" class="main-button">
-      <i class="fas fa-trophy"></i> صفحة الإنجازات
-    </a>
-    <a href="#rules" class="main-button">
-      <i class="fas fa-balance-scale"></i> صفحة القوانين
-    </a>
-    <a href="#levels" class="main-button">
-      <i class="fas fa-layer-group"></i> صفحة التصنيفات
-    </a>
-  </div>
-</header>
-
-<div class="container">
-
-  <!-- ==================================================================================================== -->
-  <!-- 1. قسم الصفحة الرئيسية (الكودالاول.js) -->
-  <!-- ==================================================================================================== -->
-
-  <!-- مقدمة عن المملكة -->
-  <div class="intro-section" data-aos="fade-up">
-    <h2> مقدمة عن مملكة نايت 🌙</h2>
-    <p class="intro-text">
-      مملكة نايت هي منصة اجتماعية تفاعلية تأسست في أغسطس 2025، مبنية على تطبيق واتساب، وتجمع أكثر من 10 نقابة أنمي وأعضاء من مختلف البلدان العربية.
-      تهدف المملكة إلى توفير بيئة تجمع محبي الأنمي والثقافة العربية للتعارف، تبادل الأفكار، وتنظيم الفعاليات التفاعلية بين الأعضاء والنقابات.
-      أسس المملكة جينوو، ويشرف على إدارتها فريق مكون من أكثر من 100 مشرفًا، لضمان تنظيم النقابات وتحفيز التفاعل ضمن مجتمع واسع ومتنامي
-    </p>
-  </div>
-
-  <!-- الرتب الإدارية العليا -->
-  <div class="rank-category" data-aos="fade-up">
-    <h2>🌙 الرتب الإدارية العليا 🌙</h2>
-    <div class="ranks-grid">
-      <!-- المؤسس -->
-      <div class="rank-card" data-aos="fade-up">
-        <img src="اوبيتو.jpg" alt="〘المؤسس〙" class="rank-image">
-        <h3 class="rank-title">{المؤسس}</h3>
-        <p class="rank-desc">{جينوو}</p>
-        <p class="rank-more" id="more-founder">مؤسس جميع النقابات والمسؤول عن النظام بالمملكة.</p>
-        <button class="show-more-btn" onclick="toggleMore(this, 'more-founder')">عرض المزيد</button>
-      </div>
-
-      <!-- اللورد يوان -->
-      <div class="rank-card" data-aos="fade-up">
-        <img src="يوان.jpg" alt="〘اللورد〙" class="rank-image">
-        <h3 class="rank-title">{اللورد}</h3>
-        <p class="rank-desc">{يوان}</p>
-        <p class="rank-more" id="more-lord">نائب المؤسس والمسؤول عن نظام التصنيف والقوانين.</p>
-        <button class="show-more-btn" onclick="toggleMore(this, 'more-lord')">عرض المزيد</button>
-      </div>
-
-      <!-- اللورد كاي -->
-      <div class="rank-card" data-aos="fade-up">
-        <img src="كاي.jpg" alt="〘اللورد〙" class="rank-image">
-        <h3 class="rank-title">{اللورد}</h3>
-        <p class="rank-desc">{كاي}</p>
-        <p class="rank-more" id="more-kai">المسؤول عن تنظيم الفعاليات والبطولات الكبرى.</p>
-        <button class="show-more-btn" onclick="toggleMore(this, 'more-kai')">عرض المزيد</button>
-      </div>
-
-      <!-- اللورد أوبيتو -->
-      <div class="rank-card" data-aos="fade-up">
-        <img src="اوبيتو.jpg" alt="〘اللورد〙" class="rank-image">
-        <h3 class="rank-title">{اللورد}</h3>
-        <p class="rank-desc">{أوبيتو}</p>
-        <p class="rank-more" id="more-obito">المسؤول عن الإشراف العام على النقابات وتطبيق القوانين.</p>
-        <button class="show-more-btn" onclick="toggleMore(this, 'more-obito')">عرض المزيد</button>
-      </div>
-    </div>
-  </div>
-
-  <hr>
-
-  <!-- ==================================================================================================== -->
-  <!-- 2. قسم النقابات (الكودالثالث.js) -->
-  <!-- ==================================================================================================== -->
-
-  <div class="rank-category" id="guilds" data-aos="fade-up">
-    <h2>نقابات مملكة نايت 🌙:</h2>
-    <p style="margin-bottom: 30px; font-size: 1em;">تتفرع مملكة نايت إلى عدة نقابات، وبجانب كل اسم نقابة شعار يرمز لها لكي تتميز فيه عن غيرها.</p>
-    <div class="ranks-grid">
-
-      <!-- 1. ميلودي -->
-      <div class="rank-card" data-aos="fade-up">
-        <h3 class="rank-title">❒ ميلودي 🎼</h3>
-      </div>
-
-      <!-- 2. كوما ♦ -->
-      <div class="rank-card" data-aos="fade-up">
-        <h3 class="rank-title">❒ كوما ♦</h3>
-      </div>
-
-      <!-- 3. ريوجين -->
-      <div class="rank-card" data-aos="fade-up">
-        <h3 class="rank-title">❒ ريوجين 🐉</h3>
-      </div>
-
-      <!-- 4. بارون -->
-      <div class="rank-card" data-aos="fade-up">
-        <h3 class="rank-title">❒ بارون 🪽</h3>
-      </div>
-
-      <!-- 5. اليوت -->
-      <div class="rank-card" data-aos="fade-up">
-        <h3 class="rank-title">❒ اليوت 🌕</h3>
-      </div>
-
-      <!-- 6. نوڤا -->
-      <div class="rank-card" data-aos="fade-up">
-        <h3 class="rank-title">❒ نوڤا 🧭</h3>
-      </div>
-
-      <!-- 7. كلوڤر -->
-      <div class="rank-card" data-aos="fade-up">
-        <h3 class="rank-title">❒ كلوڤر 🍀</h3>
-      </div>
-
-      <!-- 8. فروست -->
-      <div class="rank-card" data-aos="fade-up">
-        <h3 class="rank-title">❒ فروست ❄</h3>
-      </div>
-
-      <!-- 9. هيليوس -->
-      <div class="rank-card" data-aos="fade-up">
-        <h3 class="rank-title">❒ هيليوس 💫</h3>
-      </div>
-
-      <!-- 10. دايماس -->
-      <div class="rank-card" data-aos="fade-up">
-        <h3 class="rank-title">❒ دايماس 🌀</h3>
-      </div>
-    </div>
-  </div>
-
-  <hr>
-
-  <!-- ==================================================================================================== -->
-  <!-- 3. قسم الإنجازات (الكودالرابع.js) -->
-  <!-- ==================================================================================================== -->
-
-  <div class="achievement-category" id="achievements" data-aos="fade-up">
-    <h2>🏆 إنجازات مملكة نايت</h2>
-    <p class="intro-text">
-      من تاريخ أغسطس 2025 حققت مملكة نايت الإنجازات التالية:
-    </p>
-    <div class="achievements-grid">
-
-      <!-- إنجاز 1 -->
-      <div class="achievement-card" data-aos="fade-up">
-        <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
-        <h3 class="achievement-title">مشرف +100</h3>
-        <p class="achievement-desc">وصلت مملكة نايت إلى +100 مشرف في شهر واحد فقط!</p>
-      </div>
-
-      <!-- إنجاز 2 -->
-      <div class="achievement-card" data-aos="fade-up">
-        <div class="achievement-icon"><i class="fas fa-crown"></i></div>
-        <h3 class="achievement-title">بطولات المملكة:</h3>
-        <p class="achievement-desc">
-          {1-وصول نقابة كوما الى 850 ألف تفاعل }<br>
-          {2-وصول نقابة ميلودي 120 عضو في يوم واحد}<br>
-          {3-اختراع حدث الالفيه وهو حدث يتكون من الف فعاليه}
-        </p>
-      </div>
-
-      <!-- إنجاز 3 -->
-      <div class="achievement-card" data-aos="fade-up">
-        <div class="achievement-icon"><i class="fas fa-medal"></i></div>
-        <h3 class="achievement-title">افضل مملكة من حيث القوانين</h3>
-        <p class="achievement-desc">نظام قوي اثبت استحقاقه على مدار الوقت وقوانين صارمة.</p>
-      </div>
-
-      <!-- إنجاز 4 -->
-      <div class="achievement-card" data-aos="fade-up">
-        <div class="achievement-icon"><i class="fas fa-users"></i></div>
-        <h3 class="achievement-title">10 نقابات في شهرين</h3>
-        <p class="achievement-desc">توجد في مملكة نايت 5 نقابات نشطة من أصل 10.</p>
-      </div>
-
-      <!-- إنجاز 5 -->
-      <div class="achievement-card" data-aos="fade-up">
-        <div class="achievement-icon"><i class="fas fa-flag-checkered"></i></div>
-        <h3 class="achievement-title">نظام تدريبي قوي</h3>
-        <p class="achievement-desc">في مملكتنا نظام تدريبي قوي أثبت أهميته بشكل رهيب على أداء المشرفين.</p>
-      </div>
-    </div>
-  </div>
-
-  <hr>
-
-  <!-- ==================================================================================================== -->
-  <!-- 4. قسم القوانين (الكودالخامس.js) -->
-  <!-- ==================================================================================================== -->
-
-  <div class="rules-section" id="rules" data-aos="fade-up">
-    <h2>📜 قوانين مملكة نايت</h2>
-
-    <div class="rule-item" data-aos="fade-up">
-      <div class="rule-number">أهلاً وسهلاً بكم في ╎『𝑵𝑰𝑮𝑯𝑻⊰🌙⊱𝑳𝑨𝑾𝑺』</div>
-      <div class="rule-desc"></div>
-    </div>
-
-    <!-- المخالفات -->
-    <div class="rule-item" data-aos="fade-up">
-      <div class="rule-number">『المخالفات (الإنذارات)』</div>
-      <div class="rule-desc">
-        <ol dir="rtl">
-          <li>التعارف بين الجنسين.</li>
-          <li>ممنوع إرسال ملصقات الكيبوب أو ملصقات مخلة بالآداب.</li>
-          <li>ثلاث ملصقات متتالية بدون رسائل = سبام.</li>
-          <li>9 رسائل متتالية منها 3 دون فائدة = سبام.</li>
-          <li>السبام والتشفير.</li>
-          <li>التحدث عن الهنتاي والإيتشي.</li>
-          <li>العنصرية بكل أشكالها.</li>
-          <li>التحدث في الأمور السياسية وغيرها.</li>
-          <li>منع استخدام لهجة غير عامية أو لغة غير عربية.</li>
-          <li>التحدث عن حلقة لم يمر عليها 7 ساعات.</li>
-          <li>التنمر على الأعضاء.</li>
-          <li>تسجيل الصوتية للبنات.</li>
-          <li>الصوتيات عالية الصوت المزعجة.</li>
-          <li>إرسال مقطع خارج الإنمي في يوم غير مفتوح.</li>
-          <li>الحذف.</li>
-          <li>طلب رتبة وإزعاج المسؤولين.</li>
-        </ol>
-      </div>
-    </div>
-
-    <!-- طرد مؤقت -->
-    <div class="rule-item" data-aos="fade-up">
-      <div class="rule-number">『قوانين الطرد المؤقت』</div>
-      <div class="rule-desc">
-        <ol dir="rtl">
-          <li>الاحتكاك الغير لائق بين الجنسين في الخاص أو العام.</li>
-          <li>الاعتراض على قرارات المشرفين والتدخل فيها.</li>
-        </ol>
-        <p><strong>ملاحظة:</strong> إذا حصلت على إنذارين سيتم تحويلك إلى طرد مؤبد.</p>
-      </div>
-    </div>
-
-    <!-- طرد موبد -->
-    <div class="rule-item" data-aos="fade-up">
-      <div class="rule-number">『قوانين الطرد المؤبد』</div>
-      <div class="rule-desc">
-        <ol dir="rtl">
-          <li>الحرق بجميع صوره.</li>
-          <li>النشر لقروب آخر.</li>
-          <li>إرسال أي صورة أو مقطع أو ملصق هنتاي.</li>
-          <li>الدخول بنية التخريب أو سرقة الأعضاء.</li>
-          <li>تهديد الأعضاء بالباند وغيرها.</li>
-          <li>السب والشتم.</li>
-          <li>إرسال أكثر من ملصق دفعة واحدة بنفس الوقت.</li>
-          <li>إرسال صورة لوجهك أو وجه شخص آخر في القروب.</li>
-          <li>افتعال مشاكل متعمدة داخل النقابة.</li>
-          <li>إزعاج شخص في الخاص أو ابتزازه واشتكى عليك.</li>
-          <li>إرسال صورة أو مقطع غير لائق سواء كان من إنمي أو غيره.</li>
-        </ol>
-      </div>
-    </div>
-
-    <!-- تنبيهات مهمة -->
-    <div class="rule-item" data-aos="fade-up">
-      <div class="rule-number">⚠️ تحذيرات مهمة</div>
-      <div class="rule-desc">
-        <ul dir="rtl">
-          <li>ممنوع الخروج والدخول المتكرر.</li>
-          <li>4 إنذارات = طرد لمدة يومين.</li>
-          <li>6 إنذارات = طرد مؤبد.</li>
-          <li>يُحذف الإنذار بعد 3 أيام من أخذه.</li>
-          <li>تكرار نفس الإنذارات يؤدي للطرد المؤبد.</li>
-          <li>في حال الضرورة، يمكن للمشرف تطبيق قانون غير مذكور.</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- توقيع -->
-    <div class="rule-item" data-aos="fade-up">
-      <div class="rule-number">مع تحيات إدارة</div>
-      <div class="rule-desc"><strong>╎『مملكة⊰🌙⊱𝐍𝐈𝐆𝐇𝐓</strong></div>
-    </div>
-  </div>
-
-  <hr>
-
-  <!-- ==================================================================================================== -->
-  <!-- 5. قسم التصنيفات (الكودالسادس.js) -->
-  <!-- ==================================================================================================== -->
-
-  <div class="levels-section" id="levels" data-aos="fade-up">
-    <h2>『𝑳𝑬𝑽𝑬𝑳𝑺』 - نظام تصنيف النقابات</h2>
-    <p class="intro-text">نظام تصنيف النقابات في مملكة نايت يعتمد على قوتها وأدائها.</p>
-
-    <div class="level-item" data-aos="fade-up">
-      <div class="level-title">〄↫ نظـام التصنيف</div>
-      <div class="level-desc">↫ تصنيف النقابات يعتمد على قوتها، ولكل تصنيف شروط محددة وامتيازات. التصنيفات المُعتمدة هي خمس درجات.</div>
-    </div>
-    <div class="level-item" data-aos="fade-up">
-      <div class="level-title">┋التصنيفات 🏅┋</div>
-      <div class="level-desc">
-        ↫ المستوى S: نقابات قوية<br>
-        ↫ المستوى A: نقابات شبه قوية<br>
-        ↫ المستوى B: نقابات متوسطة<br>
-        ↫ المستوى C: نقابات ضعيفة<br>
-        ↫ المستوى D: نقابات مبتدئة
-      </div>
-    </div>
-    <div class="level-item" data-aos="fade-up">
-      <div class="level-title">┋شروط التصنيفات 🗞┋</div>
-      <div class="level-desc">
-        <p>↫ كل تصنيف له شروط وأي نقابة تحققها تنتقل إليه بعد تأكيد الإدارة العليا 👑</p>
-        <strong>↫ المستوى S 🌟:</strong>
-        <ul dir="rtl">
-          <li>تفاعل فوق 16 ألف (بدون سبام).</li>
-          <li>+250 عضو مع تجديد المتفاعلين.</li>
-          <li>مشرفون فوق 30.</li>
-          <li>فروع قوية.</li>
-          <li>احترام قوانين المملكة.</li>
-        </ul>
-        <strong>↫ المستوى A ⭐⭐⭐⭐⭐:</strong>
-        <ul dir="rtl">
-          <li>تفاعل فوق 14 ألف.</li>
-          <li>+200 عضو مع تجديد المتفاعلين.</li>
-          <li>مشرفون فوق 25.</li>
-          <li>فروع جيدة.</li>
-          <li>احترام القوانين.</li>
-        </ul>
-        <strong>↫ المستوى B ⭐⭐⭐⭐:</strong>
-        <ul dir="rtl">
-          <li>تفاعل فوق 12 ألف.</li>
-          <li>+150 عضو مع تجديد المتفاعلين.</li>
-          <li>مشرفون فوق 20.</li>
-          <li>فروع متوسطة.</li>
-          <li>احترام القوانين.</li>
-        </ul>
-        <strong>↫ المستوى C ⭐⭐⭐:</strong>
-        <ul dir="rtl">
-          <li>تفاعل فوق 10 آلاف.</li>
-          <li>أقل من 120 عضو.</li>
-          <li>15 مشرف أو أقل.</li>
-          <li>فروع متوسطة أو ضعيفة.</li>
-          <li>احترام القوانين.</li>
-        </ul>
-        <strong>↫ المستوى D ⭐⭐:</strong>
-        <ul dir="rtl">
-          <li>تفاعل 10 آلاف.</li>
-          <li>100 عضو.</li>
-          <li>10 مشرفين أو أقل.</li>
-          <li>فروع متوسطة أو ضعيفة.</li>
-          <li>احترام القوانين.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="level-item" data-aos="fade-up">
-      <div class="level-title">〄↫ مع تحيات اللورد يوان</div>
-    </div>
-  </div>
-
-</div>
-
-<footer>
-  &copy; 2025 مملكة نايت - جميع الحقوق محفوظة
-  <br>
-  مع تحيات مملكة نايت
-</footer>
-
-<!-- JavaScript -->
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>
-  AOS.init();
-
-  // دالة تبديل الوضع (النهاري/المظلم)
-  function toggleMode() {
-    const body = document.body;
-    const icon = document.querySelector('#mode-toggle i');
-    const label = document.querySelector('#mode-toggle');
-
-    if (body.classList.contains("dark-mode")) {
-      // التحويل إلى الوضع النهاري
-      body.classList.remove("dark-mode");
-      body.classList.add("light-mode");
-      icon.className = "fas fa-sun";
-      label.innerHTML = '<i class="fas fa-sun"></i> وضع نهاري';
-      localStorage.setItem('mode', 'light');
-    } else {
-      // التحويل إلى الوضع المظلم
-      body.classList.remove("light-mode");
-      body.classList.add("dark-mode");
-      icon.className = "fas fa-moon";
-      label.innerHTML = '<i class="fas fa-moon"></i> وضع مظلم';
-      localStorage.setItem('mode', 'dark');
-    }
-  }
-
-  // دالة عرض/إخفاء المزيد من التفاصيل
-  function toggleMore(button, targetId) {
-    const moreText = document.getElementById(targetId);
-    if (moreText.style.display === "none" || moreText.style.display === "") {
-      moreText.style.display = "block";
-      button.textContent = "عرض أقل";
-    } else {
-      moreText.style.display = "none";
-      button.textContent = "عرض المزيد";
-    }
-  }
-
-  // تطبيق الوضع المحفوظ عند تحميل الصفحة
-  document.addEventListener('DOMContentLoaded', () => {
-    const savedMode = localStorage.getItem('mode');
-    const body = document.body;
-    const icon = document.querySelector('#mode-toggle i');
-    const label = document.querySelector('#mode-toggle');
-
-    if (savedMode === 'light') {
-      body.classList.remove("dark-mode");
-      body.classList.add("light-mode");
-      icon.className = "fas fa-sun";
-      label.innerHTML = '<i class="fas fa-sun"></i> وضع نهاري';
-    } else {
-      // الافتراضي هو الوضع المظلم
-      body.classList.remove("light-mode");
-      body.classList.add("dark-mode");
-      icon.className = "fas fa-moon";
-      label.innerHTML = '<i class="fas fa-moon"></i> وضع مظلم';
-    }
-
-    // إخفاء تفاصيل الرتب الإدارية العليا في البداية
-    document.querySelectorAll('.rank-more').forEach(el => {
-        el.style.display = 'none';
-    });
-  });
-</script>
-</body>
-</html>
